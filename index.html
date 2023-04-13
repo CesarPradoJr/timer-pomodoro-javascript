@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styled.css">
+    <script src="https://kit.fontawesome.com/804b5ce31c.js" crossorigin="anonymous"></script>
+
+    <title>Timer Pomodoro</title>
+
+    <link rel="icon" type="image/png" href="./img/logo.png">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-color">
+        <a class="navbar-brand text-white font-weight-bold" href="index.html">
+            <img src="./img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Timer Pomodoro
+        </a>
+        <div class="ml-auto">
+            <a onclick="pausar()">
+                <i id="pause" class="fa-solid fa-pause text-white ocult"></i>
+            </a>
+            <a onclick="executar()">
+                <i id="play" class="fa-solid fa-play text-white ocult"></i>
+            </a>
+            <audio id="lofi" src="./audio/lo-fi.mp3" type="audio/mpeg"></audio>
+        </div>
+    </nav>
+    <!-- /Container -->
+    <div class="container">
+        <!-- /Config -->
+        <div class="row d-flex justify-content-center mt-5 mb-5">
+            <div class="col-md-8">
+                <div id="config" class="row d-flex justify-content-center">
+                    <div class="col">
+                        <!-- /Ações -->
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="d-flex justify-content-center text-white font-weight-bold"
+                                        for="acao">Ação</label>
+                                    <input type="number" class="form-control form-control-lg border-0 shadow text-white" id="acao">
+                                    <small class="text-danger" id='erro_acao'></small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="d-flex justify-content-center text-white font-weight-bold"
+                                        for="pausa">Pausa</label>
+                                    <input type="number" class="form-control form-control-lg border-0 shadow text-white" id="pausa">
+                                    <small class="text-danger" id='erro_pausa'></small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="d-flex justify-content-center text-white font-weight-bold"
+                                        for="sessoes">Sessões</label>
+                                    <input type="number" class="form-control form-control-lg border-0 shadow text-white" id="sessoes">
+                                    <small class="text-danger" id='erro_sessoes'></small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Ações -->
+                        <div class="row mt-5 mb-5 d-flex justify-content-center">
+                            <div class="col-md-9">
+                                <button onclick="iniciar()" class="btn shadow btn-lg btn-block btn-color text-white font-weight-bold">Iniciar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Config -->
+
+        <!-- /Timer -->
+        <div id="timer" class="mt-0 d-flex justify-content-center ocult">
+            <div class="row mb-3">
+                <div class="col">
+                    <h3 id='title' class="text-center"></h3>
+                </div>
+            </div>
+
+            <div class="row shadow time">
+                <div class="col-5 p-0">
+                    <h2 id="minutes_ok"></h2>
+                </div>
+                <div class="col-1 p-0 d-flex justify-content-center">
+                    <h2>:</h2>
+                </div>
+                <div class="col-5 pl-0">
+                    <h2 id="seconds_ok"></h2>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col">
+                    <h3 id='title_sessao' class="text-center text-secondary"></h3>
+                </div>
+            </div>
+        </div>
+        <!-- /Timer -->
+
+        <!-- /Finalização-->
+        <div id="fim" class="ocult">
+            <h1 class="text-success text-center">Parabéns! Você finalizou suas tarefas.</h1>
+            <div class="row mt-5 mb-5 d-flex justify-content-center">
+                <div class="col-md-9 d-flex justify-content-center">
+                    <a href="./index.html" class="btn btn-danger shadow btn-lg">Inicio</a>
+                 </div>
+            </div>
+        </div>
+        <!-- /Finalização -->
+    </div>
+    <!-- /Container -->
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
+    <script src="./scripts.js"></script>
+</body>
+
+</html>
