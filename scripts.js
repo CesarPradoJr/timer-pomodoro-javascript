@@ -3,9 +3,9 @@ let pausa = document.getElementById('pausa')
 let sessoes = document.getElementById('sessoes')
 let segundos
 
-var bell = new Audio("audio/bell.mp3")
-var volta = new Audio("./audio/volta.mp3")
-var final = new Audio("./audio/final.mp3")
+var bell = new Audio('./audio/audio_bell.mp3')
+var volta = new Audio("./audio/audio_volta.mp3")
+var final = new Audio("./audio/audio_final.mp3")
 
 var lofi = document.getElementById('lofi')
 var pause = document.getElementById('pause')
@@ -67,34 +67,47 @@ function iniciar() {
         min = Number(localStorage.getItem('acao'))
 
         min = min - 1
+        var min_format = (min < 10 ? '0' + min : min)
         segundos = 59
+        var seg_format = (segundos < 10 ? '0' + segundos : segundos)
 
-        document.getElementById('minutes_ok').innerHTML = min
-        document.getElementById('seconds_ok').innerHTML = segundos
+        document.getElementById('minutes_ok').innerHTML = min_format
+        document.getElementById('seconds_ok').innerHTML = seg_format
 
         var min_interval = setInterval(minTimer, 60000)
         var seg_interval = setInterval(segTimer, 1000)
+        var title_interval = setInterval(atualizaTitle, 1000);
 
         function minTimer() {
-            min = min - 1
-            document.getElementById('minutes_ok').innerHTML = min
+            min =  min - 1
+            var min_format = (min < 10 ? '0' + min : min)
+            document.getElementById('minutes_ok').innerHTML = min_format
         }
 
         function segTimer() {
             segundos = segundos - 1
-            document.getElementById('seconds_ok').innerHTML = segundos
+            var seg_format = (segundos < 10 ? '0' + segundos : segundos)
+            document.getElementById('seconds_ok').innerHTML = seg_format
 
             if (segundos <= 0) {
                 if (min <= 0) {
                     clearInterval(min_interval)
                     clearInterval(seg_interval)
+                    clearInterval(title_interval)
 
                     bell.play()
+                    bell.volume = 0.05
                     momentoPausa()
                 }
                 segundos = 60
+                
             }
         }
+        function atualizaTitle(){
+            var titulo = (min < 10 ? '0' + min : min) + ':' + (segundos < 10 ? '0' + segundos : segundos)
+			document.title = 'Pomodoro Ação ' + titulo;
+        }
+        
     }
 
     function momentoPausa() {
@@ -107,22 +120,27 @@ function iniciar() {
         min_pausa = Number(localStorage.getItem('pausa'))
 
         min_pausa = min_pausa - 1
+        var min_pausa_format = (min_pausa < 10 ? '0' + min_pausa : min_pausa)
         segundos = 59
+        var seg_format = (segundos < 10 ? '0' + segundos : segundos)
 
-        document.getElementById('minutes_ok').innerHTML = min_pausa
-        document.getElementById('seconds_ok').innerHTML = segundos
+        document.getElementById('minutes_ok').innerHTML = min_pausa_format
+        document.getElementById('seconds_ok').innerHTML = seg_format
 
         var min_interval = setInterval(minTimer, 60000)
         var seg_interval = setInterval(segTimer, 1000)
+        var title_interval = setInterval(atualizaTitle, 1000);
 
         function minTimer() {
             min_pausa = min_pausa - 1
-            document.getElementById('minutes_ok').innerHTML = min_pausa
+            var min_pausa_format = (min_pausa < 10 ? '0' + min_pausa : min_pausa)
+            document.getElementById('minutes_ok').innerHTML = min_pausa_format
         }
 
         function segTimer() {
             segundos = segundos - 1
-            document.getElementById('seconds_ok').innerHTML = segundos
+            var seg_format = (segundos < 10 ? '0' + segundos : segundos)
+            document.getElementById('seconds_ok').innerHTML = seg_format
 
             if (segundos <= 0) {
                 if (min_pausa <= 0) {
@@ -132,21 +150,27 @@ function iniciar() {
 
                     clearInterval(min_interval)
                     clearInterval(seg_interval)
+                    clearInterval(title_interval)
                     if (ses <= 0) {
                         final.play()
+                        final.volume = 0.05
                         localStorage.clear()
                         document.getElementById('config').style.setProperty('display', 'none', 'important')
                         document.getElementById('timer').style.setProperty('display', 'none', 'important')
                         document.getElementById('fim').style.setProperty('display', 'block', 'important')
                     } else {
                         volta.play()
+                        volta.volume = 0.05
                         momentoAcao()
                     }
                 }
                 segundos = 60
             }
         }
-
+        function atualizaTitle(){
+            var titulo = (min_pausa < 10 ? '0' + min_pausa : min_pausa) + ':' + (segundos < 10 ? '0' + segundos : segundos)
+            document.title = 'Pomodoro Pausa ' + titulo;
+        }
     }
 
 }
